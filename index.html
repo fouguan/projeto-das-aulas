@@ -1,76 +1,53 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bolinhas Aleatórias</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-      background-color: #f0f0f0;
-    }
-    .bolinha {
-      position: absolute;
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      background-color: red;
-      pointer-events: none;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redimensionar Imagem</title>
+    <style>
+        /* Estilo básico para a imagem */
+        #imagem {
+            width: 300px; /* Tamanho inicial da imagem */
+            height: auto;
+            transition: width 0.3s; /* Efeito suave de transição */
+        }
+    </style>
 </head>
 <body>
+    <h1>Pressione 1 para aumentar e 2 para diminuir a imagem</h1>
 
-  <script>
-    // Função para criar uma bolinha com movimento aleatório
-    function criarBolinhas() {
-      // Cria um elemento <div> para representar a bolinha
-      const bolinha = document.createElement('div');
-      bolinha.classList.add('bolinha');
-      
-      // Define um tamanho aleatório para a bolinha
-      const tamanho = Math.random() * 40 + 20; // Tamanho entre 20px e 60px
-      bolinha.style.width = `${tamanho}px`;
-      bolinha.style.height = `${tamanho}px`;
+    <img id="imagem" src="img/monstro.png" alt="Imagem de exemplo">
 
-      // Define a posição inicial aleatória da bolinha
-      const xInicial = Math.random() * window.innerWidth;
-      const yInicial = Math.random() * window.innerHeight;
-      bolinha.style.left = `${xInicial}px`;
-      bolinha.style.top = `${yInicial}px`;
-
-      // Adiciona a bolinha ao body da página
-      document.body.appendChild(bolinha);
-
-      // Função para mover a bolinha aleatoriamente
-      function moverBolinhas() {
-        const xMovimento = Math.random() * 4 - 2; // Movimento aleatório entre -2 e 2 px
-        const yMovimento = Math.random() * 4 - 2; // Movimento aleatório entre -2 e 2 px
-
-        let currentLeft = parseFloat(bolinha.style.left);
-        let currentTop = parseFloat(bolinha.style.top);
-
-        // Atualiza a posição da bolinha
-        bolinha.style.left = `${currentLeft + xMovimento}px`;
-        bolinha.style.top = `${currentTop + yMovimento}px`;
-
-        // Se a bolinha sair da tela, ela reaparece do outro lado
-        if (currentLeft + xMovimento < 0) bolinha.style.left = `${window.innerWidth}px`;
-        if (currentLeft + xMovimento > window.innerWidth) bolinha.style.left = `0px`;
-        if (currentTop + yMovimento < 0) bolinha.style.top = `${window.innerHeight}px`;
-        if (currentTop + yMovimento > window.innerHeight) bolinha.style.top = `0px`;
-      }
-
-      // Chama a função de movimento a cada 16ms (~60fps)
-      setInterval(moverBolinhas, 16);
-    }
-
-    // Cria bolinhas a cada 1 segundo
-    setInterval(criarBolinhas, 1000);
-
-  </script>
-
+    <script>
+        // Seleciona a imagem
+        const imagem = document.getElementById('imagem');
+        
+        // Define o fator de escala para aumentar/diminuir
+        const fatorEscala = 20; // A cada pressionamento, a imagem aumentará/diminuirá em 20px
+        
+        // Função para aumentar o tamanho da imagem
+        function aumentarImagem() {
+            let larguraAtual = imagem.offsetWidth; // Obtém a largura atual da imagem
+            imagem.style.width = (larguraAtual + fatorEscala) + 'px'; // Aumenta a largura
+        }
+        
+        // Função para diminuir o tamanho da imagem
+        function diminuirImagem() {
+            let larguraAtual = imagem.offsetWidth; // Obtém a largura atual da imagem
+            if (larguraAtual > fatorEscala) {
+                imagem.style.width = (larguraAtual - fatorEscala) + 'px'; // Diminui a largura
+            }
+        }
+        
+        // Detecta a pressão das teclas
+        document.addEventListener('keydown', function(event) {
+            if (event.key === '1') {
+                aumentarImagem(); // Chama a função para aumentar a imagem
+            }
+            if (event.key === '2') {
+                diminuirImagem(); // Chama a função para diminuir a imagem
+            }
+        });
+    </script>
 </body>
 </html>
