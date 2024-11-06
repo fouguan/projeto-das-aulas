@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Criar Bolinhas com o Mouse</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #f0f0f0;
+    }
+    .bolinha {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background-color: red;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+
+  <script>
+    // Função para criar uma bolinha na posição do mouse
+    document.body.addEventListener('mousedown', function(event) {
+      // Cria um elemento <div> para representar a bolinha
+      const bolinha = document.createElement('div');
+      bolinha.classList.add('bolinha');
+      
+      // Define a posição da bolinha com base na posição do mouse
+      bolinha.style.left = `${event.pageX - 15}px`; // Para centralizar a bolinha
+      bolinha.style.top = `${event.pageY - 15}px`; // Para centralizar a bolinha
+
+      // Adiciona a bolinha ao body da página
+      document.body.appendChild(bolinha);
+    });
+  </script>
+
+</body>
+</html>
