@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Criar Bolinhas com o Mouse</title>
+  <title>Bolinhas Aleatórias</title>
   <style>
     body {
       margin: 0;
       padding: 0;
       overflow: hidden;
-      background-color: #000000;
+      background-color: #f0f0f0;
     }
     .bolinha {
       position: absolute;
@@ -24,19 +24,52 @@
 <body>
 
   <script>
-    // Função para criar uma bolinha na posição do mouse
-    document.body.addEventListener('mousedown', function(event) {
+    // Função para criar uma bolinha com movimento aleatório
+    function criarBolinhas() {
       // Cria um elemento <div> para representar a bolinha
       const bolinha = document.createElement('div');
       bolinha.classList.add('bolinha');
       
-      // Define a posição da bolinha com base na posição do mouse
-      bolinha.style.left = `${event.pageX - 15}px`; // Para centralizar a bolinha
-      bolinha.style.top = `${event.pageY - 15}px`; // Para centralizar a bolinha
+      // Define um tamanho aleatório para a bolinha
+      const tamanho = Math.random() * 40 + 20; // Tamanho entre 20px e 60px
+      bolinha.style.width = `${tamanho}px`;
+      bolinha.style.height = `${tamanho}px`;
+
+      // Define a posição inicial aleatória da bolinha
+      const xInicial = Math.random() * window.innerWidth;
+      const yInicial = Math.random() * window.innerHeight;
+      bolinha.style.left = `${xInicial}px`;
+      bolinha.style.top = `${yInicial}px`;
 
       // Adiciona a bolinha ao body da página
       document.body.appendChild(bolinha);
-    });
+
+      // Função para mover a bolinha aleatoriamente
+      function moverBolinhas() {
+        const xMovimento = Math.random() * 4 - 2; // Movimento aleatório entre -2 e 2 px
+        const yMovimento = Math.random() * 4 - 2; // Movimento aleatório entre -2 e 2 px
+
+        let currentLeft = parseFloat(bolinha.style.left);
+        let currentTop = parseFloat(bolinha.style.top);
+
+        // Atualiza a posição da bolinha
+        bolinha.style.left = `${currentLeft + xMovimento}px`;
+        bolinha.style.top = `${currentTop + yMovimento}px`;
+
+        // Se a bolinha sair da tela, ela reaparece do outro lado
+        if (currentLeft + xMovimento < 0) bolinha.style.left = `${window.innerWidth}px`;
+        if (currentLeft + xMovimento > window.innerWidth) bolinha.style.left = `0px`;
+        if (currentTop + yMovimento < 0) bolinha.style.top = `${window.innerHeight}px`;
+        if (currentTop + yMovimento > window.innerHeight) bolinha.style.top = `0px`;
+      }
+
+      // Chama a função de movimento a cada 16ms (~60fps)
+      setInterval(moverBolinhas, 16);
+    }
+
+    // Cria bolinhas a cada 1 segundo
+    setInterval(criarBolinhas, 1000);
+
   </script>
 
 </body>
